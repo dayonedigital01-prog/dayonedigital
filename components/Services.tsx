@@ -27,19 +27,19 @@ const Services: React.FC = () => {
             <ul className="space-y-4 text-slate-300">
               <li className="flex items-start gap-3">
                 <span className="text-[#ffbd00]">●</span>
-                <span>Técnicos (ar condicionado, eletricista, encanador)</span>
+                <span>Empresas que já fecham clientes, mas querem previsibilidade</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#ffbd00]">●</span>
-                <span>Serviços locais (borracharia, manutenção, etc)</span>
+                <span>Negócios locais que dependem de indicação e querem escalar</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#ffbd00]">●</span>
-                <span>Negócios que já atendem clientes</span>
+                <span>Profissionais que querem agenda cheia todos os dias</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#ffbd00]">●</span>
-                <span>Quem quer aumentar a demanda</span>
+                <span>Quem já atende bem, mas precisa de mais volume</span>
               </li>
             </ul>
           </div>
@@ -48,15 +48,19 @@ const Services: React.FC = () => {
             <ul className="space-y-4 text-slate-300">
               <li className="flex items-start gap-3">
                 <span className="text-red-500">●</span>
-                <span>Quem está começando do zero</span>
+                <span>Quem está começando do zero e ainda não valida o próprio serviço</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-red-500">●</span>
-                <span>Quem não pode investir em anúncios</span>
+                <span>Quem não pode investir pelo menos um valor mínimo em anúncios</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-red-500">●</span>
-                <span>Quem quer apenas testar sem compromisso</span>
+                <span>Quem quer “testar” sem compromisso e sem consistência</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-red-500">●</span>
+                <span>Quem não tem estrutura para atender novos clientes</span>
               </li>
             </ul>
           </div>
