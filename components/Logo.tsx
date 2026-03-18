@@ -16,13 +16,13 @@ const Logo: React.FC<LogoProps> = ({ light = false, size = 'md' }) => {
   const currentSize = sizes[size];
   
   return (
-    <div className="flex flex-col items-center leading-none select-none">
+    <div className="flex flex-col items-center leading-none select-none" aria-hidden="true">
       <div className={`flex font-logo ${currentSize.main} font-black`}>
         <span className={light ? 'text-white' : 'text-black'}>D</span>
         <span className="text-[#ffbd00]">1</span>
       </div>
       <div className={`font-sans ${currentSize.sub} tracking-[0.4em] font-light ${currentSize.gap} uppercase ${light ? 'text-white/80' : 'text-slate-600'}`}>
-        Digital
+        Especialista
       </div>
     </div>
   );

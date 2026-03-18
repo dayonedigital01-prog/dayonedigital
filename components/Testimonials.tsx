@@ -31,7 +31,7 @@ const Testimonials: React.FC = () => {
               transition={{ delay: 0.1 }}
               className="text-4xl md:text-5xl font-black text-slate-900 leading-tight"
             >
-              O que acontece quando sua empresa se torna a <span className="text-[#ffbd00]">Primeira Opção</span>.
+              O que acontece quando o meu <span className="text-[#ffbd00]">trabalho</span> coloca sua empresa no topo.
             </motion.h2>
           </div>
           <motion.p 
@@ -55,13 +55,13 @@ const Testimonials: React.FC = () => {
               transition={{ delay: idx * 0.1 }}
               className="group p-10 bg-zinc-50 rounded-[2.5rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-[#ffbd00]/5 hover:-translate-y-2 transition-all duration-500 relative flex flex-col h-full"
             >
-              <div className="absolute top-8 right-10 text-slate-100 group-hover:text-[#ffbd00]/10 transition-colors duration-500">
+              <div className="absolute top-8 right-10 text-slate-100 group-hover:text-[#ffbd00]/10 transition-colors duration-500" aria-hidden="true">
                 <Quote size={56} strokeWidth={3} />
               </div>
 
-              <div className="flex gap-1 mb-6">
+              <div className="flex gap-1 mb-6" aria-label="Avaliação de 5 estrelas">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={16} className="fill-[#ffbd00] text-[#ffbd00]" />
+                  <Star key={i} size={16} className="fill-[#ffbd00] text-[#ffbd00]" aria-hidden="true" />
                 ))}
               </div>
 

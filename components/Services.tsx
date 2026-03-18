@@ -10,79 +10,165 @@ const Services: React.FC = () => {
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#ffbd00]/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2" />
       
       <div className="max-w-7xl mx-auto px-4 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-          <div className="max-w-xl">
-            <h2 className="text-3xl md:text-5xl font-black mb-6 italic leading-tight uppercase tracking-tighter">
-              Como eu domino a sua região para o seu <span className="text-[#ffbd00]">negócio local</span>
-            </h2>
-            <p className="text-slate-400 text-lg">Estratégias de precisão para quem não pode se dar ao luxo de ser ignorado no Google.</p>
+        {/* Sobre o Serviço */}
+        <div className="max-w-3xl mb-24">
+          <h2 className="text-3xl md:text-5xl font-black mb-8 italic leading-tight uppercase tracking-tighter">
+            O que eu faço pelo seu <span className="text-[#ffbd00]">negócio</span>
+          </h2>
+          <p className="text-slate-300 text-xl leading-relaxed">
+            Todos os dias, pessoas procuram no Google por serviços como o seu. O meu trabalho é fazer seu negócio aparecer exatamente nesse momento — quando o cliente já está pronto para contratar. Isso significa mais ligações, mais mensagens e mais serviços fechados.
+          </p>
+        </div>
+
+        {/* Para quem é / Para quem não é */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-24">
+          <div className="bg-white/5 p-8 rounded-3xl border border-white/10">
+            <h3 className="text-[#ffbd00] text-xl font-black uppercase tracking-widest mb-6">✔ Para quem é</h3>
+            <ul className="space-y-4 text-slate-300">
+              <li className="flex items-start gap-3">
+                <span className="text-[#ffbd00]">●</span>
+                <span>Técnicos (ar condicionado, eletricista, encanador)</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[#ffbd00]">●</span>
+                <span>Serviços locais (borracharia, manutenção, etc)</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[#ffbd00]">●</span>
+                <span>Negócios que já atendem clientes</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[#ffbd00]">●</span>
+                <span>Quem quer aumentar a demanda</span>
+              </li>
+            </ul>
           </div>
-          <div className="hidden md:block">
-             <div className="h-1 w-32 bg-[#ffbd00] mb-4" />
+          <div className="bg-white/5 p-8 rounded-3xl border border-white/10">
+            <h3 className="text-red-500 text-xl font-black uppercase tracking-widest mb-6">❌ Para quem NÃO é</h3>
+            <ul className="space-y-4 text-slate-300">
+              <li className="flex items-start gap-3">
+                <span className="text-red-500">●</span>
+                <span>Quem está começando do zero</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-red-500">●</span>
+                <span>Quem não pode investir em anúncios</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-red-500">●</span>
+                <span>Quem quer apenas testar sem compromisso</span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {SERVICES.map((s, idx) => (
-            <div key={idx} className="group p-8 bg-white/5 border border-white/10 rounded-3xl hover:bg-white/10 transition-all duration-300 hover:border-[#ffbd00]/50 transform hover:-translate-y-2">
-              <div className="w-16 h-16 bg-[#ffbd00] rounded-2xl flex items-center justify-center text-black mb-8 transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-[0_0_30px_rgba(255,189,0,0.4)] relative overflow-hidden">
-                {/* Subtle shine effect on icon hover */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                
-                <div className="relative z-10 transform group-hover:scale-110 transition-transform duration-500">
-                  {s.icon}
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 uppercase tracking-tighter group-hover:text-[#ffbd00] transition-colors">{s.title}</h3>
-              <p className="text-slate-400 leading-relaxed mb-6">{s.description}</p>
-              <div className="w-8 h-1 bg-[#ffbd00]/30 rounded-full group-hover:w-full transition-all duration-700 ease-in-out" />
+        {/* Comparativo */}
+        <div className="mb-24">
+          <h3 className="text-2xl md:text-4xl font-black mb-12 text-center uppercase tracking-tighter italic">
+            Por que o <span className="text-[#ffbd00]">Google</span> é diferente?
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="bg-white/5 p-8 rounded-3xl border border-white/10">
+              <h4 className="text-slate-400 font-bold mb-6 uppercase text-sm tracking-widest">Métodos Tradicionais</h4>
+              <ul className="space-y-4">
+                <li className="flex items-center gap-3 text-slate-500 line-through decoration-red-500/50">
+                  <span>Panfletos que vão para o lixo</span>
+                </li>
+                <li className="flex items-center gap-3 text-slate-500 line-through decoration-red-500/50">
+                  <span>Postar no Instagram e ninguém ver</span>
+                </li>
+                <li className="flex items-center gap-3 text-slate-500 line-through decoration-red-500/50">
+                  <span>Depender apenas de indicação</span>
+                </li>
+                <li className="flex items-center gap-3 text-slate-500 line-through decoration-red-500/50">
+                  <span>Esperar o cliente te achar por sorte</span>
+                </li>
+              </ul>
             </div>
-          ))}
+            <div className="bg-[#ffbd00]/10 p-8 rounded-3xl border border-[#ffbd00]/30 shadow-[0_0_40px_rgba(255,189,0,0.1)]">
+              <h4 className="text-[#ffbd00] font-bold mb-6 uppercase text-sm tracking-widest">Minha Estratégia</h4>
+              <ul className="space-y-4">
+                <li className="flex items-center gap-3 text-white font-bold">
+                  <span className="text-[#ffbd00]">✔</span>
+                  <span>Aparecer para quem já quer comprar</span>
+                </li>
+                <li className="flex items-center gap-3 text-white font-bold">
+                  <span className="text-[#ffbd00]">✔</span>
+                  <span>Anúncios focados em ligação direta</span>
+                </li>
+                <li className="flex items-center gap-3 text-white font-bold">
+                  <span className="text-[#ffbd00]">✔</span>
+                  <span>Dominação do Google Maps local</span>
+                </li>
+                <li className="flex items-center gap-3 text-white font-bold">
+                  <span className="text-[#ffbd00]">✔</span>
+                  <span>Escalabilidade previsível</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-20 p-8 md:p-12 bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-[2.5rem] border border-white/5 flex flex-col md:flex-row items-center gap-8 shadow-2xl">
-           <div className="flex-1">
-             <h4 className="text-2xl font-black mb-2 italic text-[#ffbd00] uppercase tracking-tighter">"O Fim da Invisibilidade Digital"</h4>
-             <p className="text-slate-300 text-lg leading-relaxed">
-               Enquanto seus concorrentes esperam pela sorte ou indicações, nós cercamos o seu potencial cliente. 
-               Seu negócio deixará de ser um "segredo" para se tornar a <strong>autoridade número 1</strong> no mapa de quem quer comprar agora. 
-               Visibilidade local não é vaidade, é sobrevivência e faturamento.
-             </p>
-           </div>
-           
-           <div className="flex-shrink-0 relative group">
-              {/* Pulsing effect container for the map */}
-              <div className="absolute -inset-4 bg-[#ffbd00]/10 rounded-full animate-pulse z-0"></div>
-              
-              <div className="w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-[#ffbd00] bg-slate-700 flex items-center justify-center overflow-hidden transition-all shadow-[0_0_40px_rgba(255,189,0,0.2)] relative z-10 group-hover:scale-105 duration-500">
-                {/* Simulated Google Map Background */}
-                <img 
-                  src="https://i.pinimg.com/1200x/33/e2/d3/33e2d3aafdf972c3bd0712027b669b1c.jpg" 
-                  alt="Dominação Google Maps" 
-                  className="object-cover w-full h-full opacity-70 group-hover:scale-110 transition-transform duration-700"
-                  referrerPolicy="no-referrer"
-                />
-                
-                {/* Central Map Marker */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="relative">
-                    {/* The Ping Effect */}
-                    <div className="absolute -top-1 -left-1 w-6 h-6 bg-red-500 rounded-full animate-ping opacity-75"></div>
-                    {/* The Marker Icon */}
-                    <svg className="w-8 h-8 text-red-600 relative z-10 drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                    </svg>
-                  </div>
+        {/* Problemas que resolve */}
+        <div className="mb-24">
+          <h3 className="text-2xl md:text-4xl font-black mb-12 text-center uppercase tracking-tighter italic">
+            Problemas que eu <span className="text-[#ffbd00]">resolvo</span>
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              "Falta de clientes constantes",
+              "Dependência de indicação",
+              "Concorrentes aparecendo primeiro",
+              "Dificuldade em crescer o faturamento"
+            ].map((prob, i) => (
+              <div key={i} className="p-6 bg-white/5 rounded-2xl border border-white/10 text-center font-bold text-slate-200">
+                {prob}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Como funciona */}
+        <div className="mb-24">
+          <h3 className="text-2xl md:text-4xl font-black mb-12 text-center uppercase tracking-tighter italic">
+            Como <span className="text-[#ffbd00]">funciona</span>
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {[
+              { t: "Entendo seu serviço", d: "Analiso sua região e seu público" },
+              { t: "Estruturo sua presença", d: "Preparo tudo para o Google te aceitar" },
+              { t: "Faço você aparecer", d: "Coloco seu negócio na frente de quem procura" },
+              { t: "Você recebe contatos", d: "Ligações e mensagens direto no WhatsApp" }
+            ].map((step, i) => (
+              <div key={i} className="relative">
+                <div className="text-6xl font-black text-white/5 absolute -top-8 -left-4 z-0" aria-hidden="true">{i + 1}</div>
+                <div className="relative z-10">
+                  <h4 className="text-[#ffbd00] font-bold mb-2 uppercase tracking-tighter">{step.t}</h4>
+                  <p className="text-slate-400 text-sm">{step.d}</p>
                 </div>
-                
-                {/* Gloss effect */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none"></div>
               </div>
-              
-              {/* Badge indicating "Live" or "Top" */}
-              <div className="absolute -bottom-2 right-0 bg-[#ffbd00] text-black text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase tracking-tighter transform group-hover:scale-110 transition-transform">
-                Top #1
-              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Resultados Esperados */}
+        <div className="p-8 md:p-12 bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-[2.5rem] border border-white/5 flex flex-col md:flex-row items-center gap-8 shadow-2xl">
+           <div className="flex-1">
+             <h4 className="text-2xl font-black mb-6 italic text-[#ffbd00] uppercase tracking-tighter">Resultados que você pode esperar</h4>
+             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+               <div className="flex items-center gap-3">
+                 <div className="w-2 h-2 bg-[#ffbd00] rounded-full" />
+                 <span className="text-xl font-bold">Mais ligações</span>
+               </div>
+               <div className="flex items-center gap-3">
+                 <div className="w-2 h-2 bg-[#ffbd00] rounded-full" />
+                 <span className="text-xl font-bold">Mais WhatsApp</span>
+               </div>
+               <div className="flex items-center gap-3">
+                 <div className="w-2 h-2 bg-[#ffbd00] rounded-full" />
+                 <span className="text-xl font-bold">Mais vendas</span>
+               </div>
+             </div>
            </div>
         </div>
       </div>

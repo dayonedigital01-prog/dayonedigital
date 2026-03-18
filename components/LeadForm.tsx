@@ -1,91 +1,123 @@
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 
 interface FormValues {
   name: string;
-  activity: string;
-  city: string;
   whatsapp: string;
+  service: string;
+  city: string;
+  acquisition: string;
+  investment: string;
 }
 
 interface FormErrors {
   name?: string;
-  activity?: string;
-  city?: string;
   whatsapp?: string;
+  service?: string;
+  city?: string;
 }
 
+const BRAZILIAN_CITIES = [
+  'São Paulo', 'Rio de Janeiro', 'Brasília', 'Salvador', 'Fortaleza', 'Belo Horizonte', 
+  'Manaus', 'Curitiba', 'Recife', 'Goiânia', 'Belém', 'Porto Alegre', 'Guarulhos', 
+  'Campinas', 'São Luís', 'São Gonçalo', 'Maceió', 'Duque de Caxias', 'Natal', 'Teresina',
+  'São Bernardo do Campo', 'Nova Iguaçu', 'Campo Grande', 'Osasco', 'Santo André', 
+  'João Pessoa', 'Jaboatão dos Guararapes', 'Contagem', 'São José dos Campos', 'Uberlândia'
+];
+
 const LeadForm: React.FC = () => {
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [values, setValues] = useState<FormValues>({
     name: '',
-    activity: '',
-    city: '',
     whatsapp: '',
+    service: '',
+    city: '',
+    acquisition: 'Indicação',
+    investment: 'Até R$ 500'
   });
   const [errors, setErrors] = useState<FormErrors>({});
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [citySuggestions, setCitySuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const suggestionRef = useRef<HTMLDivElement>(null);
 
-  const validateField = (name: keyof FormValues, value: string): string | undefined => {
-    switch (name) {
-      case 'name':
-        if (value.length < 3) return 'O nome deve ter pelo menos 3 caracteres.';
-        break;
-      case 'activity':
-        if (value.length < 3) return 'Informe seu ramo de atividade.';
-        break;
-      case 'city':
-        if (value.length < 2) return 'Informe sua cidade.';
-        break;
-      case 'whatsapp':
-        const phoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
-        if (!phoneRegex.test(value)) return 'Informe um WhatsApp válido (Ex: 11 99999-9999).';
-        break;
-      default:
-        return undefined;
-    }
-    return undefined;
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (suggestionRef.current && !suggestionRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const formatWhatsApp = (value: string) => {
+    const numbers = value.replace(/\D/g, '');
+    if (numbers.length <= 2) return numbers;
+    if (numbers.length <= 7) return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setValues(prev => ({ ...prev, [name]: value }));
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { id, value } = e.target;
     
-    if (touched[name]) {
-      const error = validateField(name as keyof FormValues, value);
-      setErrors(prev => ({ ...prev, [name]: error }));
+    if (id === 'whatsapp') {
+      const formatted = formatWhatsApp(value);
+      setValues(prev => ({ ...prev, [id]: formatted }));
+    } else if (id === 'city') {
+      setValues(prev => ({ ...prev, [id]: value }));
+      if (value.length > 1) {
+        const filtered = BRAZILIAN_CITIES.filter(city => 
+          city.toLowerCase().includes(value.toLowerCase())
+        ).slice(0, 5);
+        setCitySuggestions(filtered);
+        setShowSuggestions(filtered.length > 0);
+      } else {
+        setShowSuggestions(false);
+      }
+    } else {
+      setValues(prev => ({ ...prev, [id]: value }));
+    }
+
+    // Clear error when user types
+    if (errors[id as keyof FormErrors]) {
+      setErrors(prev => ({ ...prev, [id]: undefined }));
     }
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setTouched(prev => ({ ...prev, [name]: true }));
-    const error = validateField(name as keyof FormValues, value);
-    setErrors(prev => ({ ...prev, [name]: error }));
+  const validate = (): boolean => {
+    const newErrors: FormErrors = {};
+    
+    if (!values.name.trim()) newErrors.name = 'Nome é obrigatório';
+    
+    const whatsappNumbers = values.whatsapp.replace(/\D/g, '');
+    if (whatsappNumbers.length < 10 || whatsappNumbers.length > 11) {
+      newErrors.whatsapp = 'WhatsApp inválido (ex: 11 99999-9999)';
+    }
+    
+    if (!values.service.trim()) newErrors.service = 'Informe seu serviço';
+    if (!values.city.trim()) newErrors.city = 'Informe sua cidade';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate all fields before submission
-    const newErrors: FormErrors = {};
-    let hasErrors = false;
-    
-    (Object.keys(values) as Array<keyof FormValues>).forEach(key => {
-      const error = validateField(key, values[key]);
-      if (error) {
-        newErrors[key] = error;
-        hasErrors = true;
-      }
-    });
+    if (!validate()) return;
 
-    if (hasErrors) {
-      setErrors(newErrors);
-      setTouched({ name: true, activity: true, city: true, whatsapp: true });
-      return;
-    }
+    setIsSubmitting(true);
+    // Simulate submission
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }, 1500);
+  };
 
-    setIsSubmitted(true);
+  const selectCity = (city: string) => {
+    setValues(prev => ({ ...prev, city }));
+    setShowSuggestions(false);
+    setErrors(prev => ({ ...prev, city: undefined }));
   };
 
   if (isSubmitted) {
@@ -97,18 +129,23 @@ const LeadForm: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-3xl font-black mb-4">Análise Solicitada!</h2>
-          <p className="text-slate-600 mb-8 font-medium">Nossa equipe entrará em contato em até 24h para apresentar o plano de dominação da sua região.</p>
+          <h2 className="text-3xl font-black mb-4 uppercase tracking-tighter italic">Aplicação Recebida!</h2>
+          <p className="text-slate-600 mb-8 font-medium">Vou analisar seu serviço e sua região pessoalmente. Se eu puder te ajudar, entrarei em contato pelo WhatsApp em breve.</p>
           <button 
             onClick={() => {
               setIsSubmitted(false);
-              setValues({ name: '', activity: '', city: '', whatsapp: '' });
-              setErrors({});
-              setTouched({});
+              setValues({
+                name: '',
+                whatsapp: '',
+                service: '',
+                city: '',
+                acquisition: 'Indicação',
+                investment: 'Até R$ 500'
+              });
             }}
             className="text-slate-400 hover:text-black transition-colors underline text-xs font-bold uppercase tracking-widest"
           >
-            Enviar novos dados
+            Enviar outra aplicação
           </button>
         </div>
       </section>
@@ -120,107 +157,147 @@ const LeadForm: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-16 items-center">
         <div className="flex-1">
           <div className="inline-block px-3 py-1 bg-red-100 text-red-600 text-[10px] font-black uppercase tracking-widest rounded mb-4">
-            Atenção: Vagas Limitadas por Região
+            Vagas Limitadas por Região
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-tight">
-            Pare de perder clientes para quem <span className="text-[#ffbd00]">faz menos</span> que você.
+          <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight italic uppercase tracking-tighter">
+            Pronto para <span className="text-red-600 underline">Dominar</span> sua Cidade?
           </h2>
-          <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-            Se você é bom no que faz, mas sua agenda não reflete isso, o problema é sua <strong>visibilidade</strong>. 
-            Nós mapeamos sua região e criamos um cerco digital para que sua empresa seja a única escolha lógica.
+          <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+            Esse formulário é para entender se faz sentido eu te ajudar. Só entro em contato com quem realmente tem potencial.
           </p>
-          <div className="space-y-4">
-            {[
-              'Raio de atuação ultra-específico',
-              'Otimização de Perfil no Google',
-              'Anúncios focados em conversão imediata'
-            ].map(item => (
-              <div key={item} className="flex items-center gap-4 text-slate-800 font-black italic">
-                <div className="w-5 h-5 bg-[#ffbd00] rounded flex items-center justify-center text-[10px] shadow-sm">✓</div>
-                {item}
-              </div>
-            ))}
+          
+          <div className="space-y-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-zinc-900 text-[#ffbd00] rounded-full flex items-center justify-center font-black">1</div>
+              <p className="font-bold text-slate-800">Preencha os dados abaixo</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-zinc-900 text-[#ffbd00] rounded-full flex items-center justify-center font-black">2</div>
+              <p className="font-bold text-slate-800">Eu analiso seu caso pessoalmente</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-zinc-900 text-[#ffbd00] rounded-full flex items-center justify-center font-black">3</div>
+              <p className="font-bold text-slate-800">Entro em contato se puder te ajudar</p>
+            </div>
           </div>
         </div>
 
-        <div className="w-full max-w-lg relative">
-          <div className="absolute -top-6 -left-6 w-12 h-12 bg-[#ffbd00] rounded-full z-0 animate-ping opacity-20" />
-          <form 
-            onSubmit={handleSubmit}
-            noValidate
-            className="relative z-10 p-8 md:p-10 bg-slate-900 rounded-[2rem] shadow-2xl border border-white/5"
-          >
-            <h3 className="text-white text-xl font-black mb-6 border-b border-white/10 pb-4">Análise Gratuita de Presença</h3>
-            
-            <div className="space-y-5">
+        <div className="flex-1 w-full max-w-xl">
+          <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-slate-100 relative">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Seu Nome / Nome da Empresa</label>
+                <label htmlFor="name" className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Nome Completo</label>
                 <input 
-                  name="name"
+                  id="name"
                   type="text" 
                   value={values.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={`w-full px-5 py-3.5 rounded-xl bg-white/5 border ${errors.name && touched.name ? 'border-red-500' : 'border-white/10'} text-white focus:outline-none focus:border-[#ffbd00] transition-all`}
-                  placeholder="Seu nome completo"
+                  onChange={handleInputChange}
+                  className={`w-full bg-zinc-50 border-2 rounded-2xl px-6 py-4 focus:border-[#ffbd00] outline-none transition-all font-bold focus-visible:ring-2 focus-visible:ring-[#ffbd00] ${errors.name ? 'border-red-500' : 'border-zinc-100'}`}
+                  placeholder="Seu nome"
                 />
-                {errors.name && touched.name && <p className="mt-1.5 text-red-500 text-[10px] font-bold uppercase ml-1">{errors.name}</p>}
+                {errors.name && <p className="text-red-500 text-[10px] font-bold mt-1 uppercase">{errors.name}</p>}
               </div>
-              
               <div>
-                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Ramo de Atividade</label>
+                <label htmlFor="whatsapp" className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">WhatsApp</label>
                 <input 
-                  name="activity"
-                  type="text" 
-                  value={values.activity}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  placeholder="Ex: Dentista, Loja de Roupas, Pet Shop"
-                  className={`w-full px-5 py-3.5 rounded-xl bg-white/5 border ${errors.activity && touched.activity ? 'border-red-500' : 'border-white/10'} text-white focus:outline-none focus:border-[#ffbd00] transition-all`}
+                  id="whatsapp"
+                  type="tel" 
+                  value={values.whatsapp}
+                  onChange={handleInputChange}
+                  className={`w-full bg-zinc-50 border-2 rounded-2xl px-6 py-4 focus:border-[#ffbd00] outline-none transition-all font-bold focus-visible:ring-2 focus-visible:ring-[#ffbd00] ${errors.whatsapp ? 'border-red-500' : 'border-zinc-100'}`}
+                  placeholder="(00) 00000-0000"
                 />
-                {errors.activity && touched.activity && <p className="mt-1.5 text-red-500 text-[10px] font-bold uppercase ml-1">{errors.activity}</p>}
+                {errors.whatsapp && <p className="text-red-500 text-[10px] font-bold mt-1 uppercase">{errors.whatsapp}</p>}
               </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Cidade / Estado</label>
-                  <input 
-                    name="city"
-                    type="text" 
-                    value={values.city}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    placeholder="Ex: São Paulo, SP"
-                    className={`w-full px-5 py-3.5 rounded-xl bg-white/5 border ${errors.city && touched.city ? 'border-red-500' : 'border-white/10'} text-white focus:outline-none focus:border-[#ffbd00] transition-all`}
-                  />
-                  {errors.city && touched.city && <p className="mt-1.5 text-red-500 text-[10px] font-bold uppercase ml-1">{errors.city}</p>}
-                </div>
-                <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">WhatsApp</label>
-                  <input 
-                    name="whatsapp"
-                    type="tel" 
-                    value={values.whatsapp}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    placeholder="(00) 00000-0000"
-                    className={`w-full px-5 py-3.5 rounded-xl bg-white/5 border ${errors.whatsapp && touched.whatsapp ? 'border-red-500' : 'border-white/10'} text-white focus:outline-none focus:border-[#ffbd00] transition-all`}
-                  />
-                  {errors.whatsapp && touched.whatsapp && <p className="mt-1.5 text-red-500 text-[10px] font-bold uppercase ml-1">{errors.whatsapp}</p>}
-                </div>
+              <div>
+                <label htmlFor="service" className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Qual serviço você oferece?</label>
+                <input 
+                  id="service"
+                  type="text" 
+                  value={values.service}
+                  onChange={handleInputChange}
+                  className={`w-full bg-zinc-50 border-2 rounded-2xl px-6 py-4 focus:border-[#ffbd00] outline-none transition-all font-bold focus-visible:ring-2 focus-visible:ring-[#ffbd00] ${errors.service ? 'border-red-500' : 'border-zinc-100'}`}
+                  placeholder="Ex: Ar Condicionado, Eletricista..."
+                />
+                {errors.service && <p className="text-red-500 text-[10px] font-bold mt-1 uppercase">{errors.service}</p>}
+              </div>
+              <div className="relative" ref={suggestionRef}>
+                <label htmlFor="city" className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Em qual cidade atende?</label>
+                <input 
+                  id="city"
+                  type="text" 
+                  value={values.city}
+                  onChange={handleInputChange}
+                  autoComplete="off"
+                  className={`w-full bg-zinc-50 border-2 rounded-2xl px-6 py-4 focus:border-[#ffbd00] outline-none transition-all font-bold focus-visible:ring-2 focus-visible:ring-[#ffbd00] ${errors.city ? 'border-red-500' : 'border-zinc-100'}`}
+                  placeholder="Sua cidade"
+                />
+                {showSuggestions && (
+                  <div className="absolute z-10 w-full bg-white border border-zinc-100 rounded-xl mt-1 shadow-lg overflow-hidden">
+                    {citySuggestions.map((city, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => selectCity(city)}
+                        className="w-full text-left px-6 py-3 hover:bg-zinc-50 font-bold text-sm transition-colors"
+                      >
+                        {city}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {errors.city && <p className="text-red-500 text-[10px] font-bold mt-1 uppercase">{errors.city}</p>}
+              </div>
+              <div>
+                <label htmlFor="acquisition" className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Como consegue clientes hoje?</label>
+                <select 
+                  id="acquisition" 
+                  value={values.acquisition}
+                  onChange={handleInputChange}
+                  className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-2xl px-6 py-4 focus:border-[#ffbd00] outline-none transition-all font-bold appearance-none focus-visible:ring-2 focus-visible:ring-[#ffbd00]"
+                >
+                  <option>Indicação</option>
+                  <option>Instagram/Facebook</option>
+                  <option>Google</option>
+                  <option>Panfletagem/Outros</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="investment" className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Quanto pretende investir por mês em anúncios?</label>
+                <select 
+                  id="investment" 
+                  value={values.investment}
+                  onChange={handleInputChange}
+                  className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-2xl px-6 py-4 focus:border-[#ffbd00] outline-none transition-all font-bold appearance-none focus-visible:ring-2 focus-visible:ring-[#ffbd00]"
+                >
+                  <option>Até R$ 500</option>
+                  <option>R$ 500 a R$ 1.000</option>
+                  <option>R$ 1.000 a R$ 3.000</option>
+                  <option>Acima de R$ 3.000</option>
+                </select>
               </div>
               
               <button 
                 type="submit"
-                className="w-full mt-4 bg-[#ffbd00] hover:bg-white text-black font-black py-4 rounded-xl shadow-xl transition-all transform hover:-translate-y-1 active:scale-95 text-base uppercase tracking-tight"
+                disabled={isSubmitting}
+                className="w-full bg-zinc-900 text-[#ffbd00] font-black py-5 rounded-2xl text-xl hover:bg-black transition-all shadow-xl flex items-center justify-center gap-3 group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-zinc-900/50"
               >
-                Solicitar Análise Estratégica
+                {isSubmitting ? 'ENVIANDO...' : 'QUERO MAIS CLIENTES'}
+                {!isSubmitting && (
+                  <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                )}
               </button>
-            </div>
-            <p className="text-center text-[9px] text-slate-500 mt-6 uppercase tracking-widest font-bold">
-              Analisamos apenas 1 empresa por nicho em cada bairro para garantir exclusividade de resultados.
-            </p>
-          </form>
+
+              <div className="flex items-center justify-center gap-2 mt-6 opacity-50">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                </svg>
+                <span className="text-[10px] font-bold uppercase tracking-widest">Seus dados estão 100% seguros</span>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </section>
