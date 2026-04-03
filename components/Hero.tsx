@@ -19,10 +19,10 @@ const Hero: React.FC = () => {
           <span className="text-[#ffbd00] text-sm font-bold tracking-wide uppercase">Performance para Negócios Locais</span>
         </div>
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-[1.1]">
-          Se alguém procurar seu serviço no Google hoje… <span className="text-[#ffbd00]">você aparece</span> ou seu concorrente fecha o cliente?
+          Se alguém procurar seu serviço no Google hoje… <span className="text-[#ffbd00]">você aparece</span> ou está dando o cliente de bandeja para o concorrente?
         </h1>
         <p className="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-          Ajudo prestadores de serviço locais a aparecerem no Google no momento exato em que o cliente precisa — gerando ligações e pedidos no WhatsApp.
+          Pare de depender da sorte ou de indicações que nunca chegam. Colocamos seu negócio no topo do Google para atrair clientes prontos para contratar, <span className="text-white font-bold">todos os dias.</span>
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <a 

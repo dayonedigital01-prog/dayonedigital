@@ -19,9 +19,6 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         <div className="flex items-center gap-2 md:gap-3">
           <Logo light={!isScrolled} size="sm" />
-          <span className={`text-base md:text-xl font-black tracking-tighter md:tracking-tight ${isScrolled ? 'text-black' : 'text-white'}`}>
-            D1 Digital
-          </span>
         </div>
         <div className="hidden md:flex space-x-8 items-center">
           {[

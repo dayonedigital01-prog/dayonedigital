@@ -116,16 +116,16 @@ const Services: React.FC = () => {
         {/* Problemas que resolve */}
         <div className="mb-24">
           <h3 className="text-2xl md:text-4xl font-black mb-12 text-center uppercase tracking-tighter italic">
-            Problemas que eu <span className="text-[#ffbd00]">resolvo</span>
+            Dores que eu <span className="text-[#ffbd00]">elimino</span> do seu dia a dia
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              "Falta de clientes constantes",
-              "Dependência de indicação",
-              "Concorrentes aparecendo primeiro",
-              "Dificuldade em crescer o faturamento"
+              "O silêncio desesperador do seu WhatsApp",
+              "A incerteza de como será o faturamento do mês",
+              "Ver o concorrente 'pior' dominando a região",
+              "O cansaço de postar no Instagram e não vender"
             ].map((prob, i) => (
-              <div key={i} className="p-6 bg-white/5 rounded-2xl border border-white/10 text-center font-bold text-slate-200">
+              <div key={i} className="p-6 bg-white/5 rounded-2xl border border-white/10 text-center font-bold text-slate-200 leading-tight">
                 {prob}
               </div>
             ))}

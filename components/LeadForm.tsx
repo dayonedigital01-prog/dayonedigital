@@ -160,10 +160,10 @@ const LeadForm: React.FC = () => {
             Vagas Limitadas por Região
           </div>
           <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight italic uppercase tracking-tighter">
-            Pronto para <span className="text-red-600 underline">Dominar</span> sua Cidade?
+            Pronto para <span className="text-red-600 underline">Dominar</span> sua Região?
           </h2>
           <p className="text-slate-600 text-lg mb-8 leading-relaxed">
-            Esse formulário é para entender se faz sentido eu te ajudar. Só entro em contato com quem realmente tem potencial.
+            Essa aplicação serve para filtrar quem realmente está pronto para crescer. Eu analiso cada caso pessoalmente para garantir que o investimento traga retorno real.
           </p>
           
           <div className="space-y-6">
