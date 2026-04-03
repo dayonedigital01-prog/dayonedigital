@@ -107,10 +107,24 @@ const LeadForm: React.FC = () => {
     if (!validate()) return;
 
     setIsSubmitting(true);
-    // Simulate submission
+    
+    // Prepare WhatsApp message
+    const message = `*Nova Aplicação - D1 Digital*%0A%0A` +
+      `*Nome:* ${values.name}%0A` +
+      `*WhatsApp:* ${values.whatsapp}%0A` +
+      `*Serviço:* ${values.service}%0A` +
+      `*Cidade:* ${values.city}%0A` +
+      `*Como consegue clientes:* ${values.acquisition}%0A` +
+      `*Investimento pretendido:* ${values.investment}`;
+
+    const whatsappNumber = '5544997068938'; // Added 9 for mobile standard in PR
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${message}`;
+
+    // Simulate submission and redirect
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
+      window.open(whatsappUrl, '_blank');
     }, 1500);
   };
 
