@@ -231,7 +231,7 @@ const LeadForm: React.FC = () => {
                   value={values.service}
                   onChange={handleInputChange}
                   className={`w-full bg-zinc-50 border-2 rounded-2xl px-6 py-4 focus:border-[#ffbd00] outline-none transition-all font-bold focus-visible:ring-2 focus-visible:ring-[#ffbd00] ${errors.service ? 'border-red-500' : 'border-zinc-100'}`}
-                  placeholder="Ex: Ar Condicionado, Eletricista..."
+                  placeholder="Ex: Energia Solar, Climatização, Móveis Planejados..."
                 />
                 {errors.service && <p className="text-red-500 text-[10px] font-bold mt-1 uppercase">{errors.service}</p>}
               </div>

@@ -11,19 +11,24 @@ export const COLORS = {
 
 export const TESTIMONIALS: Testimonial[] = [
   {
-    text: "Antes eu dependia de quem passava na frente da loja. Agora o WhatsApp não para de tocar com gente que nos achou no Google.",
-    author: "Ricardo",
-    role: "Proprietário de Oficina Premium"
+    text: "O custo por lead qualificado caiu pela metade. Hoje fechamos projetos de energia solar toda semana com clientes que nos acham no Google.",
+    author: "Carlos",
+    role: "Diretor de Empresa de Energia Solar"
   },
   {
-    text: "Minha clínica estava escondida. Com o trabalho da D1, aparecemos em primeiro no mapa e nossa agenda lotou em 2 meses.",
-    author: "Dra. Beatriz",
-    role: "Clínica Odontológica"
+    text: "Antes eu dependia de indicação. Agora, quando alguém pesquisa 'climatização' na cidade, eu sou o primeiro a aparecer e o WhatsApp não para.",
+    author: "André",
+    role: "Especialista em Climatização"
   },
   {
-    text: "O investimento se pagou na primeira semana. O tráfego local é o que faltava para escalarmos o faturamento.",
-    author: "Marcos",
-    role: "Rede de Hamburguerias"
+    text: "O público do Google é muito mais qualificado. Fechamos projetos de móveis planejados de alto padrão com clientes que nos acharam no mapa.",
+    author: "Juliana",
+    role: "Studio de Móveis Planejados"
+  },
+  {
+    text: "A D1 Digital transformou nossa captação. O tráfego local trouxe investidores reais que antes nem sabiam que nossa imobiliária existia.",
+    author: "Roberto",
+    role: "Imobiliária de Luxo"
   }
 ];
 

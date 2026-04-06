@@ -132,6 +132,26 @@ const Services: React.FC = () => {
           </div>
         </div>
 
+        {/* Niches de Atuação */}
+        <div className="mb-24">
+          <h3 className="text-2xl md:text-4xl font-black mb-12 text-center uppercase tracking-tighter italic">
+            Especialista em <span className="text-[#ffbd00]">Niches de Alto Ticket</span>
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {[
+              "Energia Solar",
+              "Imobiliárias",
+              "Climatização",
+              "Móveis Planejados",
+              "Serviços B2B"
+            ].map((niche, i) => (
+              <div key={i} className="p-4 bg-[#ffbd00]/5 rounded-xl border border-[#ffbd00]/20 text-center font-black text-[#ffbd00] uppercase text-xs tracking-widest">
+                {niche}
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Como funciona */}
         <div className="mb-24">
           <h3 className="text-2xl md:text-4xl font-black mb-12 text-center uppercase tracking-tighter italic">
