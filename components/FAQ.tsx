@@ -6,19 +6,19 @@ import { Plus, Minus } from 'lucide-react';
 const FAQS = [
   {
     q: "Quanto tempo demora para ver os primeiros resultados?",
-    a: "Diferente do Instagram, onde você precisa construir audiência, no Google os resultados são quase imediatos. Assim que os anúncios entram no ar, seu telefone já pode começar a tocar."
+    a: "No Google, os resultados são quase imediatos. No Meta Ads (Instagram/Facebook), criamos desejo e escala. Unindo os dois, você tem contatos chegando desde a primeira semana."
   },
   {
-    q: "Preciso ter um site pronto?",
-    a: "Não se preocupe com isso. Eu estruturo toda a sua presença, incluindo landing pages de alta conversão se necessário, para garantir que o cliente chegue até o seu WhatsApp."
+    q: "É melhor investir no Google ou no Meta Ads?",
+    a: "Depende do seu nicho. O Google é para quem já está procurando (intenção), o Meta é para quem ainda não sabe que precisa de você (desejo). O combo dos dois é o que traz o maior ROI para negócios locais."
   },
   {
-    q: "O Google funciona para o meu tipo de serviço?",
-    a: "Se as pessoas procuram pelo seu serviço quando precisam de ajuda (ex: encanador, advogado, mecânico, dentista), então o Google é o melhor lugar do mundo para você estar."
+    q: "O que é Meta Ads?",
+    a: "É a plataforma de anúncios do Facebook e Instagram. Usamos ela para 'perseguir' quem visitou seu site e para encontrar novos clientes com o perfil exato do seu público-alvo."
   },
   {
     q: "Qual o investimento mínimo em anúncios?",
-    a: "Recomendamos começar com pelo menos R$ 20 a R$ 30 por dia para ter um volume saudável de contatos, mas isso varia de acordo com a sua cidade e concorrência."
+    a: "Recomendamos começar com pelo menos R$ 20 a R$ 30 por dia por plataforma para ter um volume saudável de contatos, mas ajustamos a estratégia de acordo com o seu orçamento atual."
   }
 ];
 

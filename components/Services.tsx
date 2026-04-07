@@ -135,7 +135,7 @@ const Services: React.FC = () => {
         {/* Niches de Atuação */}
         <div className="mb-24">
           <h3 className="text-2xl md:text-4xl font-black mb-12 text-center uppercase tracking-tighter italic">
-            Especialista em <span className="text-[#ffbd00]">Niches de Alto Ticket</span>
+            Performance e <span className="text-[#ffbd00]">Aquisição</span>
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {[
@@ -177,9 +177,9 @@ const Services: React.FC = () => {
 
         {/* Resultados Esperados */}
         <div className="p-8 md:p-12 bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-[2.5rem] border border-white/5 flex flex-col md:flex-row items-center gap-8 shadow-2xl">
-           <div className="flex-1">
-             <h4 className="text-2xl font-black mb-6 italic text-[#ffbd00] uppercase tracking-tighter">Resultados que você pode esperar</h4>
-             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+           <div className="flex-1 text-center">
+             <h4 className="text-2xl font-black mb-8 italic text-[#ffbd00] uppercase tracking-tighter">Resultados que você pode esperar</h4>
+             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 justify-items-center">
                <div className="flex items-center gap-3">
                  <div className="w-2 h-2 bg-[#ffbd00] rounded-full" />
                  <span className="text-xl font-bold">Mais ligações</span>

@@ -39,13 +39,13 @@ const Hero: React.FC = () => {
             <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
               <span className="text-white font-black text-xs">G</span>
             </div>
-            <span className="text-white font-bold text-sm tracking-tighter">Google Partner</span>
+            <span className="text-white font-bold text-sm tracking-tighter">Google Ads</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
               <span className="text-white font-black text-xs">M</span>
             </div>
-            <span className="text-white font-bold text-sm tracking-tighter">Meta Ads Expert</span>
+            <span className="text-white font-bold text-sm tracking-tighter">Meta Ads</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
