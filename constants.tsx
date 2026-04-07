@@ -26,9 +26,9 @@ export const TESTIMONIALS: Testimonial[] = [
     role: "Studio de Móveis Planejados"
   },
   {
-    text: "A D1 Digital transformou nossa captação. O tráfego local trouxe investidores reais que antes nem sabiam que nossa imobiliária existia.",
+    text: "A D1 Digital transformou nossa captação. O tráfego local trouxe clientes reais interessados em comprar e alugar que antes nem sabiam que nossa imobiliária existia.",
     author: "Roberto",
-    role: "Imobiliária de Luxo"
+    role: "Imobiliária Regional"
   }
 ];
 
